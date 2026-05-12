@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Écran - Le Rat de Wall Street</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="screen.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="screen-page">
+      <div class="screen-main">
+        <div class="news-item-wrapper" id="news-item-wrapper">
+          <div class="news-icon-container" id="news-icon-container">
+            <img id="news-icon" src="danger.webp" alt="News Icon" />
+          </div>
+
+          <div class="alert-box" id="alert-box">
+            LIVE NEWS — En attente d'un événement marché...
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="market-chart-wrap">
+            <canvas id="market-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <aside class="screen-side">
+        <div class="timer-box">
+          <strong class="timer-value" id="timer-value">STOP</strong>
+        </div>
+
+        <div class="leaderboard-box">
+          <h2>Leaderboard</h2>
+          <div id="leaderboard-container"></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Dans ton fichier index.html sur GitHub -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="screen.js"></script>
+  </body>
+</html>

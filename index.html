@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lobby - Trading Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="lobby-body">
+    <div id="background-slideshow"></div>
+
+    <main class="lobby-stage">
+      <section class="lobby-panel">
+        <h1 class="lobby-title">
+          <img
+            src="Logo_Blanc.png"
+            alt="Le Rat de Wall Street"
+            class="lobby-logo"
+          />
+        </h1>
+
+        <div class="qr-wrapper">
+          <div id="qrcode"></div>
+        </div>
+
+        <div class="lobby-status-card">
+          <p class="status-line">
+            État : <span id="game-status">Partie fermée</span>
+          </p>
+          <p class="status-line">
+            En attente : <span id="waiting-count">0</span>
+          </p>
+          <p class="status-line">En jeu : <span id="active-count">0</span></p>
+        </div>
+
+        <div class="admin-actions">
+          <button id="open-game-button">Ouvrir la partie</button>
+          <button id="close-game-button">Fermer la partie</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Dans ton fichier index.html sur GitHub -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="lobby.js"></script>
+  </body>
+</html>

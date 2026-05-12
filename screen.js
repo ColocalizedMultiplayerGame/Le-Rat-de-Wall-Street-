@@ -155,15 +155,15 @@ socket.on("game:update", data => {
         if (data.newsEvent.type === "positive") {
             alertBox.style.borderColor = "#28a745"; // Vert
             alertBox.style.backgroundColor = "#beffbe";
-            newsIcon.src = "/assets/positif.png";
+            newsIcon.src = "positif.png";
         } else if (data.newsEvent.type === "negative") {
             alertBox.style.borderColor = "#dc3545"; // Rouge
             alertBox.style.backgroundColor = "#ffe6e6";
-            newsIcon.src = "/assets/danger.webp";
+            newsIcon.src = "danger.webp";
         } else {
             alertBox.style.borderColor = "#ffaa00"; // Orange/Jaune
             alertBox.style.backgroundColor = "#ffecc7";
-            newsIcon.src = "/assets/neutre.png";
+            newsIcon.src = "neutre.png";
         }
     }
 

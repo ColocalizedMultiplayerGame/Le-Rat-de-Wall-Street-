@@ -1,7 +1,7 @@
 // Mémoire pour stocker les classements des 30 dernières secondes
 let leaderboardHistory = [];
 
-const socket = io();
+const socket = io("https://le-rat-de-wall-street-server.onrender.com");
 
 const alertBox = document.getElementById("alert-box");
 const timerValue = document.getElementById("timer-value");

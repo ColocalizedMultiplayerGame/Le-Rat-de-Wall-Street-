@@ -50,33 +50,39 @@ socket.on("lobby:update", (data) => {
   if (activeCountEl) activeCountEl.textContent = data.activeCount;
 });
 
-// 6. CHARGEMENT DES IMAGES DEPUIS LE SERVEUR
-async function loadLobbyBackgrounds() {
-  try {
-    const response = await fetch(`${SERVER_URL}/api/lobby-backgrounds`);
-    const images = await response.json();
+// Liste des fichiers tels qu'ils apparaissent à la racine
+const LOBBY_IMAGES = [
+    "rat-bureau.png",
+    "rat-conference.png", // Renommez 'rat-confe||ürence..png' en 'rat-conference.png'
+    "rat-metro.png"
+];
 
-    if (!Array.isArray(images) || images.length === 0) {
-      backgroundSlideshow.classList.add("background-fallback");
-      return;
+function loadLobbyBackgrounds() {
+    const backgroundSlideshow = document.getElementById("background-slideshow");
+
+    if (!backgroundSlideshow) {
+        console.error("L'élément #background-slideshow est introuvable dans le HTML.");
+        return;
     }
 
-    images.forEach((imageUrl, index) => {
-      const slide = document.createElement("div");
-      slide.className = "bg-slide";
-      // On ajoute l'URL de Render car les images sont stockées là-bas
-      slide.style.backgroundImage = `url("${SERVER_URL}${imageUrl}")`;
+    LOBBY_IMAGES.forEach((imageName, index) => {
+        const slide = document.createElement("div");
+        slide.className = "bg-slide";
+        
+        // Puisque tout est à la racine, on met juste le nom du fichier
+        slide.style.backgroundImage = `url("${imageName}")`;
 
-      if (index === 0) slide.classList.add("active");
-      backgroundSlideshow.appendChild(slide);
+        if (index === 0) slide.classList.add("active");
+        backgroundSlideshow.appendChild(slide);
     });
 
-    if (images.length > 1) startSlideshow();
-  } catch (error) {
-    console.error("Erreur de chargement des images :", error);
-    backgroundSlideshow.classList.add("background-fallback");
-  }
+    if (LOBBY_IMAGES.length > 1 && typeof startSlideshow === "function") {
+        startSlideshow();
+    }
 }
+
+// Appeler la fonction au chargement
+document.addEventListener("DOMContentLoaded", loadLobbyBackgrounds);
 
 function startSlideshow() {
   const slides = document.querySelectorAll(".bg-slide");

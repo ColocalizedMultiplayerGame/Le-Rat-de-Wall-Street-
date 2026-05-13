@@ -7,7 +7,7 @@ const socket = io(SERVER_URL);
 
 // 3. CONFIGURATION DU QR CODE
 // Note : Vérifie si ton URL de joueur est bien sur Railway ou si elle doit aussi être sur GitHub
-const playerUrl = "https://wallstreet.up.railway.app/player.html";
+const playerUrl = "https://alexandre94460vlt.github.io/Le-Rat-de-Wall-Street-Manette-/";
 
 const qrCodeContainer = document.getElementById("qrcode");
 const backgroundSlideshow = document.getElementById("background-slideshow");

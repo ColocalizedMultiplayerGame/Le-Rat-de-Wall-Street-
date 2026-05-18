@@ -132,7 +132,7 @@ socket.on("game:update", data => {
         sessionStorage.setItem("wallstreet_endStats", JSON.stringify(data.endStats));
 
         // 2. On redirige vers la nouvelle page !
-        window.location.href = "/endscreen.html";
+        window.location.href = "endscreen.html";
         return;
     }
 

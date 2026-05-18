@@ -12,7 +12,7 @@ const colors = ["#ea9c0b", "#3fe047", "#f00000", "#1e33a8", "#25c76a"];
 const FIXED_HISTORY_LENGTH = 50;
 
 // Variables pour le Timer
-let countdownSeconds = 5 * 60; // 5 minutes
+let countdownSeconds = 5 * 1; // 5 minutes
 let timerInterval = null;
 let gameAlreadyStarted = false; // Pour éviter de relancer le chrono à chaque seconde
 

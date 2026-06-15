@@ -1,6 +1,7 @@
 let leaderboardHistory = [];
 
-const socket = io("https://le-rat-de-wall-street-server.onrender.com");
+// Connexion sur la nouvelle instance Render
+const socket = io("https://le-rat-de-wall-street-server-q2o3.onrender.com");
 
 // RÉCUPÉRATION DU ROOM ID DEPUIS LE SESSION STORAGE
 const roomId = sessionStorage.getItem("current_room_id");
@@ -12,6 +13,7 @@ if (roomId) {
     alert("Erreur : Aucun salon détecté. Veuillez repasser par le Lobby.");
 }
 
+// ... Tout le reste de ton fichier screen.js actuel (Timer, Chart.js, Leaderboard) reste strictement le même !
 const alertBox = document.getElementById("alert-box");
 const timerValue = document.getElementById("timer-value");
 const leaderboardContainer = document.getElementById("leaderboard-container");

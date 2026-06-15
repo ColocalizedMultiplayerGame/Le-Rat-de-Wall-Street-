@@ -2,21 +2,28 @@
 const SERVER_URL = "https://le-rat-de-wall-street-server.onrender.com";
 
 // 2. CONNEXION UNIQUE À SOCKET.IO
-// On utilise l'URL de Render explicitement
 const socket = io(SERVER_URL);
 
-// 3. CONFIGURATION DU QR CODE
-// Note : Vérifie si ton URL de joueur est bien sur Railway ou si elle doit aussi être sur GitHub
-const playerUrl = "https://alexandre94460vlt.github.io/Le-Rat-de-Wall-Street-Manette-/";
+// 3. GÉNÉRATION OU RÉCUPÉRATION DU CODE DE SALON (ROOM ID)
+// On génère un code de 4 lettres uniques pour cette session de Lobby
+function generateRoomId() {
+    return Math.random().toString(36).substring(2, 6).toUpperCase();
+}
+const roomId = generateRoomId();
+
+// On stocke le roomId dans la session pour que screen.html puisse le récupérer
+sessionStorage.setItem("current_room_id", roomId);
+
+// Mettre à jour l'URL de la manette pour y inclure le roomId en paramètre
+const playerUrl = `https://alexandre94460vlt.github.io/Le-Rat-de-Wall-Street-Manette-/?room=${roomId}`;
+
+// Affichage textuel du code sur le lobby (si tu ajoutes un élément HTML dédié)
+const roomDisplayEl = document.getElementById("room-id-display");
+if (roomDisplayEl) {
+    roomDisplayEl.textContent = roomId;
+}
 
 const qrCodeContainer = document.getElementById("qrcode");
-const backgroundSlideshow = document.getElementById("background-slideshow");
-const gameStatusEl = document.getElementById("game-status");
-const waitingCountEl = document.getElementById("waiting-count");
-const activeCountEl = document.getElementById("active-count");
-const openGameButton = document.getElementById("open-game-button");
-const closeGameButton = document.getElementById("close-game-button");
-
 if (qrCodeContainer) {
   new QRCode(qrCodeContainer, {
     text: playerUrl,
@@ -28,61 +35,59 @@ if (qrCodeContainer) {
   });
 }
 
-// 4. GESTION DES BOUTONS
+// 4. REJOINDRE LA ROOM EN TANT QU'ADMIN
+socket.emit("admin:join-room", { roomId });
+
+const gameStatusEl = document.getElementById("game-status");
+const waitingCountEl = document.getElementById("waiting-count");
+const activeCountEl = document.getElementById("active-count");
+const openGameButton = document.getElementById("open-game-button");
+const closeGameButton = document.getElementById("close-game-button");
+
+// 5. GESTION DES BOUTONS (On envoie le roomId au serveur)
 openGameButton.addEventListener("click", () => {
-  console.log("Demande d'ouverture de partie...");
-  socket.emit("admin:open-game");
-  // Ouvre l'écran de jeu (doit être présent sur ton GitHub)
+  console.log(`Demande d'ouverture de la partie pour la room ${roomId}...`);
+  socket.emit("admin:open-game", { roomId });
   window.open("screen.html", "_blank");
 });
 
 closeGameButton.addEventListener("click", () => {
-  socket.emit("admin:close-game");
+  socket.emit("admin:close-game", { roomId });
 });
 
-// 5. MISE À JOUR DU LOBBY (REÇU DU SERVEUR)
+// 6. MISE À JOUR DU LOBBY (REÇU DU SERVEUR SPÉCIFIQUE À LA ROOM)
 socket.on("lobby:update", (data) => {
   if (gameStatusEl)
-    gameStatusEl.textContent = data.isGameOpen
-      ? "Partie ouverte"
-      : "Partie fermée";
+    gameStatusEl.textContent = data.isGameOpen ? "Partie ouverte" : "Partie fermée";
   if (waitingCountEl) waitingCountEl.textContent = data.waitingCount;
   if (activeCountEl) activeCountEl.textContent = data.activeCount;
 });
 
-// Liste des fichiers tels qu'ils apparaissent à la racine
-const LOBBY_IMAGES = [
-    "rat-bureau.png",
-    "rat-conference.png", // Renommez 'rat-confe||ürence..png' en 'rat-conference.png'
-    "rat-metro.png"
-];
+// === GESTION DU DIAPORAMA (Inchangée) ===
+const LOBBY_IMAGES = ["rat-bureau.png", "rat-conference.png", "rat-metro.png"];
 
 function loadLobbyBackgrounds() {
     const backgroundSlideshow = document.getElementById("background-slideshow");
+    if (!backgroundSlideshow) return;
 
-    if (!backgroundSlideshow) {
-        console.error("L'élément #background-slideshow est introuvable dans le HTML.");
-        return;
-    }
+    // Évite de dupliquer les images si la fonction est appelée deux fois
+    backgroundSlideshow.innerHTML = "";
 
     LOBBY_IMAGES.forEach((imageName, index) => {
         const slide = document.createElement("div");
         slide.className = "bg-slide";
-        
-        // Puisque tout est à la racine, on met juste le nom du fichier
         slide.style.backgroundImage = `url("${imageName}")`;
-
         if (index === 0) slide.classList.add("active");
         backgroundSlideshow.appendChild(slide);
     });
-
-    if (LOBBY_IMAGES.length > 1 && typeof startSlideshow === "function") {
-        startSlideshow();
-    }
 }
 
-// Appeler la fonction au chargement
-document.addEventListener("DOMContentLoaded", loadLobbyBackgrounds);
+document.addEventListener("DOMContentLoaded", () => {
+    loadLobbyBackgrounds();
+    if (LOBBY_IMAGES.length > 1) {
+        startSlideshow();
+    }
+});
 
 function startSlideshow() {
   const slides = document.querySelectorAll(".bg-slide");
@@ -90,11 +95,8 @@ function startSlideshow() {
   if (slides.length === 0) return;
 
   setInterval(() => {
-    slides[currentIndex].classList.remove("active");
+    if(slides[currentIndex]) slides[currentIndex].classList.remove("active");
     currentIndex = (currentIndex + 1) % slides.length;
-    slides[currentIndex].classList.add("active");
+    if(slides[currentIndex]) slides[currentIndex].classList.add("active");
   }, 7000);
 }
-
-// Lancement au chargement de la page
-loadLobbyBackgrounds();

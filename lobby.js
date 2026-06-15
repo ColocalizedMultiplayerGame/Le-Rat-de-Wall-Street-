@@ -1,5 +1,6 @@
-// 1. DÉFINITION DE L'URL DE TON SERVEUR (RENDER)
-const SERVER_URL = "https://le-rat-de-wall-street-server.onrender.com";
+
+// 1. DÉFINITION DE L'URL DE TON NOUVEAU SERVEUR MULTISESSION
+const SERVER_URL = "https://le-rat-de-wall-street-server-q2o3.onrender.com";
 
 // 2. CONNEXION UNIQUE À SOCKET.IO
 const socket = io(SERVER_URL);

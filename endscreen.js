@@ -1,4 +1,4 @@
-const socket = io("https://le-rat-de-wall-street-server.onrender.com");
+const socket = io("https://le-rat-de-wall-street-server-ko13.onrender.com");
 
 // 1. Récupération des données depuis le sessionStorage
 const statsString = sessionStorage.getItem("wallstreet_endStats");

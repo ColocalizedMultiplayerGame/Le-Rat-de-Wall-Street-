@@ -1,7 +1,7 @@
 let leaderboardHistory = [];
 
 // Connexion sur la nouvelle instance Render
-const socket = io("https://le-rat-de-wall-street-server-q2o3.onrender.com");
+const socket = io("https://le-rat-de-wall-street-server-ko13.onrender.com");
 
 // RÉCUPÉRATION DU ROOM ID DEPUIS LE SESSION STORAGE
 const roomId = sessionStorage.getItem("current_room_id");

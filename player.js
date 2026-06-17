@@ -1,4 +1,4 @@
-const socket = io("https://le-rat-de-wall-street-server-q2o3.onrender.com");
+const socket = io("https://le-rat-de-wall-street-server-ko13.onrender.com");
 
 // --- DOM Elements ---
 const joinSection = document.getElementById("join-section");

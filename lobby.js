@@ -1,6 +1,6 @@
 
 // 1. DÉFINITION DE L'URL DE TON NOUVEAU SERVEUR MULTISESSION
-const SERVER_URL = "https://le-rat-de-wall-street-server-q2o3.onrender.com";
+const SERVER_URL = "https://le-rat-de-wall-street-server-ko13.onrender.com";
 
 // 2. CONNEXION UNIQUE À SOCKET.IO
 const socket = io(SERVER_URL);
@@ -16,7 +16,7 @@ const roomId = generateRoomId();
 sessionStorage.setItem("current_room_id", roomId);
 
 // Mettre à jour l'URL de la manette pour y inclure le roomId en paramètre
-const playerUrl = `https://alexandre94460vlt.github.io/Le-Rat-de-Wall-Street-Manette-/?room=${roomId}`;
+const playerUrl = `https://github.com/ColocalizedMultiplayerGame/Le-Rat-de-Wall-Street-Manette-/?room=${roomId}`; 
 
 // Affichage textuel du code sur le lobby (si tu ajoutes un élément HTML dédié)
 const roomDisplayEl = document.getElementById("room-id-display");
